@@ -41,6 +41,25 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     @Override
+    public Employee updateEmployee(Integer id, Employee updatedEmployee) {
+        logger.info ("Updating employee with ID: {}", id);
+        Optional<Employee> existingEmployeeOpt = employeeRepository.findById (id);
+
+        Employee savedEmployee = null;
+        if (existingEmployeeOpt.isPresent ()) {
+            Employee existingEmployee = existingEmployeeOpt.get ();
+
+            existingEmployee.setEmployeeName (updatedEmployee.getEmployeeName ());
+            existingEmployee.setEmail (updatedEmployee.getEmail ());
+            existingEmployee.setPassword (updatedEmployee.getPassword ());
+
+            savedEmployee = employeeRepository.save (existingEmployee);
+
+        }
+        return savedEmployee;
+    }
+
+    @Override
     public Optional<Employee> getEmployeeById(Integer id) {
         logger.info("Fetching employee with ID: {}", id);
         return employeeRepository.findById(id);
