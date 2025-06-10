@@ -5,6 +5,7 @@ import com.sachin.employee.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,14 @@ public class EmployeeController {
         logger.info("Fetching employee with ID: {}", id);
         Optional<Employee> employee = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(employee);
+    }
+
+    // GET with pagination
+    @GetMapping("/pagination")
+    public Page<Employee> getPaginatedEmployees(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "3") int size) {
+
+        return employeeService.getEmployeeWithPagination(page, size);
     }
 
     @DeleteMapping("/removeId/{id}")
