@@ -17,4 +17,6 @@ public interface EmployeeService {
     boolean deleteEmployeeById(Integer id);
 
     Page<Employee> getEmployeeWithPagination(int page, int size);
+
+    Employee updateEmployee(Integer id, Employee employee);
 }

@@ -64,23 +64,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-        logger.info("Updating employee with ID: {}", id);
-        Optional<Employee> existingEmployeeOpt = employeeService.getEmployeeById(id);
-
-        if (existingEmployeeOpt.isPresent()) {
-            Employee existingEmployee = existingEmployeeOpt.get();
-
-            existingEmployee.setEmployeeName(updatedEmployee.getEmployeeName());
-            existingEmployee.setEmail(updatedEmployee.getEmail());
-            existingEmployee.setPassword(updatedEmployee.getPassword());
-
-            Employee savedEmployee = employeeService.addEmployee(existingEmployee);
-            logger.info("Updated employee: {}", savedEmployee);
-            return ResponseEntity.ok(savedEmployee);
-        } else {
-            logger.warn("Employee with ID: {} not found for update", id);
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+          return ResponseEntity.ok (employeeService.updateEmployee(id,employee));
         }
-    }
+
 }
